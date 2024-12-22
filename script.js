@@ -34,7 +34,7 @@ searchBox.addEventListener('keydown',(event)=> {
     }
 })
 async function getFetchData(endPoint, city){
-    const url = `http://api.openweathermap.org/data/2.5/${endPoint}?q=${city}&appid=${apiKey}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/${endPoint}?q=${city}&appid=${apiKey}&units=metric`;
 
     const response= await fetch(url)
 
@@ -76,7 +76,7 @@ async function updateWeatherInfo (city){
     currenDate.textContent=getCurrentDate()
     console.log(getCurrentDate())
 
-    const iconUrl = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
+    const iconUrl = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
     weatherSummaryImg.src = iconUrl;
 
     await updateForecastInfo(city)

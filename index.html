@@ -4,9 +4,154 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
-    <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="script.js" defer></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+    color: white;
+    font-weight: 500;
+}
+body{
+    background-image: url(https://images.unsplash.com/photo-1561553543-e4c7b608b98d?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main-container{
+    border: 2px solid white;
+    border-radius: 30px;
+    width: 400px;
+    height: 500px;
+    background: transparent;
+    backdrop-filter: blur(2px);
+    z-index: 1;
+    padding: 20px;
+}
+
+.weather-info{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+.search-container{
+    position: relative;
+}
+.search-box{
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 99px;
+    background-color: transparent;
+    border: 1px solid white;
+    font-weight: 500;
+    transition: 0.25s border;
+    padding-right: 45px;
+}
+.search-box:focus{
+    border: 3px solid rgb(0, 0, 0, 0.15);
+}
+.search-box::placeholder{
+    color: rgb(255, 255, 255, 0.75);
+}
+.search-btn{
+    background: none;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%) ;
+    border: none;
+    display: flex;
+    cursor: pointer;
+}
+.location-date-container{
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.location{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.weather-summary-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.weather-summary-img{
+    height: 130px;
+    width: 130px;
+}
+.weather-sumaary-info{
+    text-align: end;
+}
+.weather-condition-container{
+    display: flex;
+    justify-content: space-between;
+}
+.condition-item{
+    display: flex;
+    gap: 6px;
+}
+.bxs-droplet{
+    font-size: 35px;
+}
+.bx-wind{
+    font-size: 45px;
+}
+.forecast-item-container {
+    display: flex;
+    padding: 12px;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap; 
+}
+
+.forecast-item{
+    border: solid;
+    width: 80px;
+    background: rgb(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    margin: 3px;
+    gap: 6px;
+    padding: 0;
+    align-items: center;
+    border-radius: 12px;
+    transition: 0.3s background;
+}
+.forecast-item:hover{
+    background: rgb(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgb(255, 255, 255);
+}
+.forecast-item-img{
+    height: 35px;
+    width: 35px;
+}
+.section-message{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+.message-img{
+    height: 180px;
+    width: fit-content;
+}
+    </style>
 </head>
 <body>
     <div class="main-container">
@@ -29,8 +174,8 @@
                 <img src="" class="weather-summary-img">
                 <div class="weather-summary-info">
                     <h2 class="temp-txt"></h2>
-                    <p class="main-condition-txt"></p>
-                    <p class="condition-txt"></p>
+                    <h3 class="main-weather-condition"></h3>
+                    <h5 class="description-condition-txt"></h5>
                 </div>
             </div>
 
@@ -45,7 +190,7 @@
                 <div class="condition-item">
                     <i class='bx bx-wind'></i>
                         <div class="condition-item-info">
-                        <h5 class="condition">Wind speed</h5>
+                        <h5 class="condition">Wind speed/ direction</h5>
                         <h5 class="wind-value"></h5>
                         <h5 class="wind-direction"></h5>
                         </div>
@@ -53,16 +198,6 @@
             </div>
 
             <div class="forecast-item-container">
-                <div class="forecast-item">
-                    <h5 class="forecast-item-date"></h5>
-                    <img src="" alt="pix" class="forecast-item-img">
-                    <h5 class="forecast-item-temp"></h5>
-                </div>
-                <div class="forecast-item">
-                    <h5 class="forecast-item-date"></h5>
-                    <img src="" alt="pix" class="forecast-item-img">
-                    <h5 class="forecast-item-temp"></h5>
-                </div>
                 <div class="forecast-item">
                     <h5 class="forecast-item-date"></h5>
                     <img src="" alt="pix" class="forecast-item-img">
@@ -107,6 +242,150 @@
             </div>
         </section>
     </div>
+<script>
+    const apiKey = 'c1cc05219aaf07f2289681e011217fe5';
+const searchBox = document.querySelector('.search-box');
+const searchBtn= document.querySelector(".search-btn");
 
+const weatherInfoSection=document.querySelector('.weather-info');
+const notFoundSection=document.querySelector('.not-found');
+const searchCitySection=document.querySelector('.search-city');
+
+const countryTxt = document.querySelector('.country-txt')
+const tempTxt = document.querySelector('.temp-txt')
+const mainConditionTxt = document.querySelector('.main-weather-condition')
+const currenDate=document.querySelector('.current-date')
+const conditionTxt=document.querySelector('.description-condition-txt')
+const humidityValue=document.querySelector('.humidity-value')
+const windValue=document.querySelector('.wind-value')
+const windDirection=document.querySelector('.wind-direction')
+const weatherSummaryImg= document.querySelector('.weather-summary-img')
+
+const forecastItemsContainer = document.querySelector('.forecast-item-container')
+
+searchBtn.addEventListener('click', () =>{
+    if (searchBox.value.trim() != ''){
+        updateWeatherInfo(searchBox.value)
+        searchBox.value=''
+        searchBox.blur()
+    }
+    
+})
+searchBox.addEventListener('keydown',(event)=> {
+    if (event.key == 'Enter' && searchBox.value.trim() != ''){
+        updateWeatherInfo(searchBox.value)
+        searchBox.value=''
+        searchBox.blur()
+    }
+})
+async function getFetchData(endPoint, city) {
+    const url = `http://api.openweathermap.org/data/2.5/${endPoint}?q=${city}&appid=${apiKey}&units=metric`;
+    
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('City not found or API error');
+        return response.json();
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        alert("There was an error fetching the weather data.");
+    }
+}
+function getCurrentDate() {
+    const currenDate = new Date()
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    }
+    return currenDate.toLocaleDateString('en-GB',options)
+}
+async function updateWeatherInfo (city){
+    const weatherData = await getFetchData('weather',city)
+
+    if(weatherData.cod != 200){
+        showDisplaySection(notFoundSection)
+        return
+    }
+    console.log(weatherData)
+
+    const{
+        name: enterCity,
+        main: {temp, humidity},
+        weather: [{ main, description}],
+        wind: {speed, deg},
+    } = weatherData
+
+    countryTxt.textContent = enterCity;
+    tempTxt.textContent = Math.round(temp) + '°C';
+    mainConditionTxt.textContent = main;
+    conditionTxt.textContent = description; 
+    humidityValue.textContent = humidity + '%';
+    windValue.textContent = speed + 'M/s'
+    windDirection.textContent = deg + '°';
+
+    currenDate.textContent=getCurrentDate()
+    console.log(getCurrentDate())
+
+    const iconUrl = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
+    weatherSummaryImg.src = iconUrl;
+
+    await updateForecastInfo(city)
+    showDisplaySection(weatherInfoSection)
+}
+   async function updateForecastInfo(city) {
+        const forecastsData = await getFetchData('forecast', city)
+   
+
+        const timeTaken ='12:00:00'
+        const todayDate = new Date().toISOString().split('T')[0]
+   
+        forecastItemsContainer.innerHTML=''
+        forecastsData.list.forEach(forecastWeather => {
+            if (forecastWeather.dt_txt && forecastWeather.dt_txt.includes(timeTaken) && !forecastWeather.dt_txt.includes(todayDate)) {
+                updateForecastItems(forecastWeather)
+            }
+        } )
+    }
+
+        function updateForecastItems(weatherData){
+            console.log(weatherData)
+            const {
+                dt_txt: date,
+                weather:[{id }],
+                main: {temp},
+            } = weatherData
+
+        const dateTaken = new Date(date)
+        const dateOption = {
+            day:'numeric',
+            month: 'short'
+        }
+        const dateResult = dateTaken.toLocaleDateString('en-US', dateOption)
+
+        const forecastItem = `
+        <div class="forecast-item" style="display: flex;">
+            <h5 class="forecast-item-date">${dateResult}</h5>
+            <img src="https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png" class="forecast-item-img">
+            <h5 class="forecast-item-temp">${Math.round(temp)} °C</h5>
+        </div>
+    `;
+
+            forecastItemsContainer.insertAdjacentHTML('beforeend', forecastItem)
+
+        
+    }
+
+    function showDisplaySection(section) {
+        [weatherInfoSection, searchCitySection, notFoundSection]
+        .forEach(section => section.style.display = 'none')
+
+    section.style.display='flex'
+    }
+    // Set Kathmandu as the default city on initial load
+window.addEventListener('load', () => {
+    updateWeatherInfo('Kathmandu');
+});
+</script>
 </body>
 </html>
